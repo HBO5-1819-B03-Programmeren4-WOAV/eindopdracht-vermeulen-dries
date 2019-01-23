@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Prog5_eindopdracht_DV.Domain
+namespace DV_Prog4_EE.Domain
 {
     public class ApplicationUser: IdentityUser
     {

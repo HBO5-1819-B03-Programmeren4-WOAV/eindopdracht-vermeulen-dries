@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Prog5_eindopdracht_DV.Domain
+namespace DV_Prog4_EE.Domain
 {
     public abstract class EntityBase
     {

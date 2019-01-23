@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Prog5_eindopdracht_DV.Domain;
+using DV_Prog4_EE.Domain;
 
-namespace Prog5_eindopdracht_DV.Models
+namespace DV_Prog4_EE.Models
 {
     public class ProfileViewModel
     {

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Prog5_eindopdracht_DV\Prog5_eindopdracht_DV.csproj" />
+    <ProjectReference Include="..\DV_Prog4_EE\DV_Prog4_EE.csproj" />
   </ItemGroup>
 
 </Project>

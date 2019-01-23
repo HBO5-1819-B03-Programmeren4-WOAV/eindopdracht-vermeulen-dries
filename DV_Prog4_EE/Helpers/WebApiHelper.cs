@@ -3,7 +3,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Prog5_eindopdracht_DV.Helpers
+namespace DV_Prog4_EE.Helpers
 {
     public class WebApiHelper
     {

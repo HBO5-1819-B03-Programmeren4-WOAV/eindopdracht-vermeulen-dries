@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Prog5_eindopdracht_DV.Enums
+namespace DV_Prog4_EE.Enums
 {
     public enum ActionType
     {

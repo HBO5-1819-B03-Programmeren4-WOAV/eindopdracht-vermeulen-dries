@@ -18,23 +18,102 @@
         </div>
 
     </div>
-       <div class="rrow">
-            <div class="rcell">
-                
-            </div>
-            <div class="rcell">
-               
-            </div>
-            <div class="rcell">  
-                    <div class="rcell">
-                       <p></p>
-                    </div> 
-            </div>
-                <div class="rcell" style="width: 100px;">
-                    <a asp-controller="Event" asp-action="EditEvent" class="glyphicon glyphicon-edit" aria-hidden="true"></a>
-                </div>
-                <div class="rcell" style="padding-left: 0;">
-                    <a asp-controller="Event" asp-action="DeleteEvent" class="glyphicon glyphicon-remove"></a>
-                </div>
+    <div class="rrow">
+        <div class="rcell">
+            test
         </div>
+        <div class="rcell">
+            test
+        </div>
+        <div class="rcell">
+            <div class="rcell">
+                test       <p></p>
+            </div>
+        </div>
+        <div class="rcell" style="width: 100px;">
+            <a asp-controller="Event" asp-action="EditEvent" class="glyphicon glyphicon-edit" aria-hidden="true"></a>
+        </div>
+        <div class="rcell" style="padding-left: 0;">
+            <a asp-controller="Event" asp-action="DeleteEvent" class="glyphicon glyphicon-remove"></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel-group">
+    @*@foreach (var item in Model)
+    {*@
+        
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 panel panel-info" id="draaiboekelement">
+            <input id="hidden" type="hidden" @*asp-for="@ID"*@ />
+            <div class="panel-heading">
+                @*status*@
+                @*@if (((DateTime)ViewData["LastAccessed"]).CompareTo(DateTime.Now) != 0 && ((DateTime)ViewData["LastAccessed"]).CompareTo(item.LaatsteWijziging) < 0 && DateTime.Now.Date.CompareTo(item.LaatsteWijziging.Date) != 0)
+                {*@
+                    <div class="label label-info"><span class="glyphicon glyphicon-bell"></span></div>
+                @*}*@
+
+            </div>
+            <div class="panel-body" id="draaiboekelementContent">
+                <p class="text-uppercase bg-info" id="titel">Leden</p>
+                <ul>
+                    <li>
+                        TestUser1
+                    </li>
+                    <li>
+                        TestUser2
+                    </li>
+                    @*@foreach (var per in item.Personen)
+                    {
+                        <li>@per.Persoon.Firstname @per.Persoon.Lastname</li>
+                    }*@
+                </ul>
+                <p class="text-uppercase bg-info" id="titel">Omschrijving</p>
+                <p>Description</p>
+
+                @*@if (item.Van.HasValue || item.Tot.HasValue)
+                {*@
+                    <p class="text-uppercase bg-info" id="titel">When</p>
+                @*}*@
+                    <p>
+                        <div>23/01/2019</div>
+                        @*@if (item.Van.HasValue)
+        {
+            <div>
+                Van @item.Van.Value.ToString("g")
+                @if (item.Tot.HasValue)
+                {
+                    <text>tot</text>
+                }
+            </div>
+        }
+        @if (item.Tot.HasValue)
+        {
+            <div>@item.Tot.Value.ToString("g")</div>
+        }*@
+                    </p>
+                <p class="text-uppercase bg-info" id="titel">Event</p>
+                <p>Title</p>
+                <p>
+                     
+                </p>
+                <p class="text-uppercase bg-info" id="titel">Bijsturing</p>
+                <p>
+                    Extra info
+                </p>
+                
+                <p class="text-uppercase bg-info" id="titel">Feedback</p>
+                @*<p>@item.Feedback</p>*@
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group-vertical btn-block">
+                        <form method="post">
+                            <button type="submit" class="btn btn-info btn-block">Details</button>
+                        </form>
+                    <a asp-controller="Event" asp-action="Edit" asp-route-id="" class="btn btn-success btn-block">Edit</a>
+                    <a asp-controller="Event" asp-action="Delete" asp-route-id="" class="btn btn-danger btn-block">Delete</a>
+                </div>
+            </div>
+        </div>
+    @*}*@
 </div>

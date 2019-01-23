@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Prog5_eindopdracht_DV.Enums;
-namespace Prog5_eindopdracht_DV.Domain
+using DV_Prog4_EE.Enums;
+
+namespace DV_Prog4_EE.Domain
 {
     public class Invitation: EntityBase
     {
