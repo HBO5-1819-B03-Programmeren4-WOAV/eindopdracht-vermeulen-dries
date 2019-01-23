@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Events</h2>
+
+<div class="rtable">
+    <div class="rrow">
+        <div class="tableHeading">
+            Title
+        </div>
+        <div class="tableHeading">
+            Description
+        </div>
+        <div class="tableHeading">
+            Date
+        </div>
+
+    </div>
+       <div class="rrow">
+            <div class="rcell">
+                
+            </div>
+            <div class="rcell">
+               
+            </div>
+            <div class="rcell">  
+                    <div class="rcell">
+                       <p></p>
+                    </div> 
+            </div>
+                <div class="rcell" style="width: 100px;">
+                    <a asp-controller="Event" asp-action="EditEvent" class="glyphicon glyphicon-edit" aria-hidden="true"></a>
+                </div>
+                <div class="rcell" style="padding-left: 0;">
+                    <a asp-controller="Event" asp-action="DeleteEvent" class="glyphicon glyphicon-remove"></a>
+                </div>
+        </div>
+</div>

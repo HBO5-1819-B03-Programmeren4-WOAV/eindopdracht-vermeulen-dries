@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <select class="bootstrap-select" >
+        <option value="user">People</option>
+        <option value="event">Events</option>
+        <option value="interest">Interests</option>
+        <option value="group">Groups</option>
+    </select>
+</div>
+
+<div class="col-md-2"></div>
+
+<div class="text-center center-block col-md-8">
+    <h1 class="panel">Search: </h1>
+    
+    <form asp-controller="Event" asp-action="Select" method="get">
+
+        <label for="Query"></label>
+        <input id="Query" name="Query" class="text-center" onkeyup="search()" />
+    </form>
+    <br />
+    <div id="search">
+
+    </div>
+
+    <div asp-validation-summary="ModelOnly"></div>
+    <a asp-controller="Main" asp-action="Index" class="btn btn-lg btn-default">Back</a>
+
+</div>
+
+<script>
+    function search() {
+        // Declare variables
+        var a, i;
+        var input = document.getElementById('Email');
+        var filter = input.value.toUpperCase();
+        var rows = document.getElementsByTagName("tr");
+
+        // Loop through all list items, and hide those who don't match the search query
+
+        $('tr').slice(1).each(function (index, element) {
+            var nameElement = element.getElementsByTagName("p")[0];
+            var name = nameElement.innerHTML.toUpperCase();
+
+            if (name.indexOf(filter) > -1) {
+                element.style.display = "";
+            } else {
+                element.style.display = "none";
+            }
+
+        });
+    }
+</script>
