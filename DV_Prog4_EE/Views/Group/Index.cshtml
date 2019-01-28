@@ -1,7 +1,122 @@
-﻿
+﻿@model  DV_Prog4_EE.Models.GroupIndexViewModel
+@using DV_Prog4_EE.Domain;
+@using DV_Prog4_EE.Enums;
 @{
     ViewData["Title"] = "Index";
 }
 
+@if (Model.Name == null)
+{
+    <p>
+        You don't have a group yet, either:
+    </p>
+    <a asp-controller="Group" asp-action="Create" class="btn btn-info btn-lg">Create a new group</a>
+    <p>
+        Or:
+    </p>
+    <a asp-controller="Search" asp-action="Index" class="btn btn-info btn-lg">Search for a group</a>
+}
+else{
+    <div class="text-center center-block">
+
+        <h1 class="panel">@Model.Name</h1>
+
+        <div class="col-md-4">
+
+            <h3>Events in @Model.Name</h3>
+            <table class="table">
+                <tr>
+                    <td>
+                        <strong>Name</strong>
+                    </td>
+                    <td>
+                        <strong>Activity</strong>
+                    </td>
+                    <td>
+                        <strong>From</strong>
+                    </td>
+                    <td>
+                        <strong>To</strong>
+                    </td>
+                </tr>
+                @if (Model.Events != null)
+                {
+                    @foreach (Event e in Model.Events)
+                    {
+                        <tr>
+                            <td>@(e.Name)</td>
+                            <td>@(e.Activity)</td>
+                            <td>@e.From</td>
+                            <td>@e.To</td>
+                            <td><a asp-controller="Event" asp-action="Edit" asp-route-mode=@ActionType.Edit asp-route-id=@e.Id class="glyphicon glyphicon-edit" aria-hidden="true"></a></td>
+                        </tr>
+                    }
+                }
+            </table>
+
+            <a asp-controller="Event" asp-action="Edit" asp-route-mode=@ActionType.Edit asp-route-id=0 class="btn btn-lg btn-info">Create a new event</a>
+        </div>
 
 
+        <div class="col-md-4">
+
+            <h3>Members in @Model.Name</h3>
+            <table class="table">
+                <tr>
+                    <td>
+                        <strong>First name</strong>
+                    </td>
+                    <td>
+                        <strong>Last name</strong>
+                    </td>
+                    <td>
+                        <strong>E-mail</strong>
+                    </td>
+                </tr>
+                @if (Model.Members != null)
+                {
+                    @foreach (AppUser a in Model.Members)
+                    {
+                        <tr>
+                            <td>@(a.FirstName)</td>
+                            <td>@(a.LastName)</td>
+                            <td>@a.Email</td>
+                        </tr>
+                    }
+                }
+            </table>
+
+            <a asp-controller="Group" asp-action="Invite" class="btn btn-lg btn-info">Invite new members</a>
+
+
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4"><h3>Chat Window</h3></div>
+        </div>
+        <div class="row">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input type="hidden" id="userInput" class="form-control alertsuccess" value=@Model.UserName>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label small">Message</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="messageInput" class="form-control alert-info">
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="button" id="sendButton" value="Send Message" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4"><ul id="messagesList"></ul></div>
+        </div>
+        <script src="lib/signalr/dist/browser/signalr.js"></script>
+        <script src="js/chat.js"></script>
+        <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    </div>
+    
+}

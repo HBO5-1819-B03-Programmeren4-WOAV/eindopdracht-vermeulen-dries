@@ -12,9 +12,8 @@ namespace DV_Prog4_EE.Domain
         public string Description { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-        //public bool IsRecurring { get; set; }
 
         public Group Owner { get; set; }
-        public List<ApplicationUser> Invitees { get; set; }
+        public List<AppUser> Invitees { get; set; }
     }
 }

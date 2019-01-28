@@ -280,7 +280,7 @@ textarea {
 
 .rcell {
     display: table-column;
-    float: left;
+    
     width: 200px;
     border-spacing: inherit;
     padding-left: 30px;
@@ -289,7 +289,7 @@ textarea {
 
 .tableHeading {
     display: table-column;
-    float: left;
+    
     width: 200px;
     height: 30px;
     background-color: #efefef;
@@ -302,8 +302,8 @@ textarea {
 
 .rbuttoncel {
     display: table-column;
-    float: left;
+    
     width: 200px;
     border-spacing: inherit;
-    margin-right: 100px;
+    
 }

@@ -1,0 +1,72 @@
+﻿@model DV_Prog4_EE.Models.SearchViewModel
+
+<table class="table table-responsive table-striped" cellpadding="10">
+    @if (Model.Filter == "People")
+    {
+        <tr style="font-weight: bold">
+            <td>First name</td>
+            <td>Last name</td>
+            <td>Email</td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td><p>@item.Email</p></td>
+
+                <td>
+                    <form asp-action="Invite" method="post" asp-route-email=@item.Email>
+                        <button class="btn btn-info" type="submit">Invite</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+    else if (Model.Filter == "Events")
+    {
+        <tr style="font-weight: bold">
+            <td>Name</td>
+            <td>Activity</td>
+            <td>Description</td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Activity</td>
+                <td><p>@item.Description</p></td>
+
+                <td>
+                    <form asp-action="Subscribe" method="post" asp-route-id=@item.Id>
+                        <button class="btn btn-info" type="submit">Participate</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+    else if (Model.Filter == "Groups")
+    {
+        <tr style="font-weight: bold">
+            <td>Name</td>
+            <td>Activity</td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.Groups)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Interest</td>
+                
+
+                <td>
+                    <form asp-action="Subscribe" method="post" asp-route-id=@item.Id>
+                        <button class="btn btn-info" type="submit">Request to join</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+</table>

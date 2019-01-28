@@ -12,6 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using DV_Prog4_EE.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DV_Prog4_EE.Repositories.Base;
+using DV_Prog4_EE.Repositories;
+using DV_Prog4_EE.Filters;
+using DV_Prog4_EE.Domain;
 
 namespace DV_Prog4_EE
 {
@@ -33,6 +37,13 @@ namespace DV_Prog4_EE
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<UserFilter>();
+
+            services.AddSignalR();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -60,14 +71,17 @@ namespace DV_Prog4_EE
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Main}/{action=Index}/{id?}");
             });
         }
     }

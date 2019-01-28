@@ -1,0 +1,32 @@
+﻿@model DV_Prog4_EE.Models.ProfileViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit your profile</h2>
+
+<div>
+    <form method="post" >
+        <img />
+
+        <div class="form-group">
+            <label asp-for="FirstName">First name</label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Interests">What kind of activities are you interested in?</label>
+            <input asp-for="Interests"  class="form-control" />
+            <span asp-validation-for="Interests" class="text-danger"></span>
+        </div>
+        <div>
+            <button class="btn btn-info" type="submit">Save</button>
+            <a asp-controller="Profile" asp-action="Index" class="btn btn-default">Cancel</a>
+        </div>
+    </form>
+</div>

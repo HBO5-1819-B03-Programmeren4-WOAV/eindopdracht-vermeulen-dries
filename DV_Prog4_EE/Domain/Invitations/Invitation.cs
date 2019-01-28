@@ -8,8 +8,8 @@ namespace DV_Prog4_EE.Domain
 {
     public class Invitation: EntityBase
     {
-        public ApplicationUser Sender { get; set; }
-        public ApplicationUser Receiver { get; set; }
+        public string SenderName { get; set; }
+        public string ReceiverEmail { get; set; }
         //Depending on wether the following attributes are null it could be a friend invitation, an event invitation or a group invitation
         public Event Event { get; set; }
         public Group Group { get; set; }

@@ -1,0 +1,30 @@
+﻿@model DV_Prog4_EE.Models.GroupIndexViewModel
+
+@{
+    ViewData["Title"] = "Make a new group";
+}
+
+<div class="col-sm-12 center-block text-center">
+
+    <h1 class="panel">@ViewData["Title"]</h1>
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <h3><label asp-for="Name"></label></h3>
+            <input asp-for="Name" class="form-control center-block" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <h3><label asp-for="Interest">What are your group's main interests?</label></h3>
+            <input asp-for="Interest" class="form-control center-block" />
+            <span asp-validation-for="Interest" class="text-danger"></span>
+        </div>
+        
+
+        <div>
+            <button class="btn btn-lg btn-info" type="submit">Create</button>
+            <a asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
+        </div>
+    </form>
+</div>

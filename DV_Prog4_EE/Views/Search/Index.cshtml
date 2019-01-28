@@ -1,22 +1,21 @@
-﻿
+﻿@model DV_Prog4_EE.Models.SearchViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
 <div>
-    <select class="bootstrap-select" >
-        <option value="user">People</option>
-        <option value="event">Events</option>
-        <option value="interest">Interests</option>
-        <option value="group">Groups</option>
-    </select>
+            @using (Html.BeginForm("Index", "Search"))
+            {
+                @Html.DropDownList("Id", (SelectList)ViewBag.Values, new { onchange = "this.form.submit();" })
+            }
+        
 </div>
 
 <div class="col-md-2"></div>
 
 <div class="text-center center-block col-md-8">
     <h1 class="panel">Search: </h1>
-    
+
     <form asp-controller="Event" asp-action="Select" method="get">
 
         <label for="Query"></label>
@@ -26,7 +25,9 @@
     <div id="search">
 
     </div>
-
+    <div id="search">
+        @await Html.PartialAsync("_Search", Model)
+    </div>
     <div asp-validation-summary="ModelOnly"></div>
     <a asp-controller="Main" asp-action="Index" class="btn btn-lg btn-default">Back</a>
 
