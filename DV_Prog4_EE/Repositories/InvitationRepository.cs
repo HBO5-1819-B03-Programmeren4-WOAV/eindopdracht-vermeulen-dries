@@ -1,67 +1,66 @@
-﻿using DV_Prog4_EE.Data;
-using DV_Prog4_EE.Domain;
-using DV_Prog4_EE.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DV_Prog4_EE.Data;
+using DV_Prog4_EE.Domain;
+using DV_Prog4_EE.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace DV_Prog4_EE.Repositories
 {
-    public class GroupRepository: IGroupRepository
+    public class InvitationRepository:IInvitationRepository
     {
         protected readonly ApplicationDbContext db;
 
-        private readonly DbSet<Group> _group;
+        private readonly DbSet<Invitation> _Invitation;
 
-        public GroupRepository(ApplicationDbContext context)
+        public InvitationRepository(ApplicationDbContext context)
         {
             db = context;
-            _group = context.Groups;
+            _Invitation = context.Invitations;
         }
 
-
-        public Group GetById(int id)
+        public List<Invitation> GetByUserId(string email)
         {
-            return _group.FirstOrDefault(c => c.Id == id);
+            return _Invitation.Where(c => c.ReceiverEmail == email).ToList();
         }
 
-        public Group GetBy(string name)
+        public virtual async Task<Invitation> GetById(int id)
         {
-            return _group.Include(u => u.Members).
-                SingleOrDefault(c => c.Name == name);
+            return await db.Set<Invitation>().FindAsync(id);
         }
+        
 
         // get an IQueryAble: to manipulate with deferred execution
-        public virtual IQueryable<Group> GetAll()
+        public virtual IQueryable<Invitation> GetAll()
         {
             // Entities won't be manipulated directly on this set --> faster with AsNoTracking()
-            return db.Set<Group>().AsNoTracking();
+            return db.Set<Invitation>().AsNoTracking();
         }
 
 
-        public async Task<IEnumerable<Group>> ListAll()
+        public async Task<IEnumerable<Invitation>> ListAll()
         {
             return await GetAll().ToListAsync();
         }
 
 
-        public virtual IQueryable<Group> GetFiltered(Expression<Func<Group, bool>> predicate)
+        public virtual IQueryable<Invitation> GetFiltered(Expression<Func<Invitation, bool>> predicate)
         {
-            return db.Set<Group>()
+            return db.Set<Invitation>()
                    .Where(predicate).AsNoTracking();
         }
 
-        public async virtual Task<IEnumerable<Group>> ListFiltered(Expression<Func<Group, bool>> predicate)
+        public async virtual Task<IEnumerable<Invitation>> ListFiltered(Expression<Func<Invitation, bool>> predicate)
         {
             return await GetFiltered(predicate).ToListAsync();
         }
 
-        public async Task<Group> Add(Group entity)
+        public async Task<Invitation> Add(Invitation entity)
         {
-            db.Set<Group>().Add(entity);
+            db.Set<Invitation>().Add(entity);
             try
             {
                 await db.SaveChangesAsync();
@@ -73,7 +72,7 @@ namespace DV_Prog4_EE.Repositories
             return entity;
         }
 
-        public async Task<Group> Update(Group entity)
+        public async Task<Invitation> Update(Invitation entity)
         {
             db.Entry(entity).State = EntityState.Modified;
             try
@@ -87,7 +86,7 @@ namespace DV_Prog4_EE.Repositories
             return entity;
         }
 
-        public void Save(Group entity)
+        public void Save(Invitation entity)
         {
             db.Entry(entity).State = EntityState.Modified;
             try
@@ -101,9 +100,9 @@ namespace DV_Prog4_EE.Repositories
 
         }
 
-        public async Task<Group> Delete(Group entity)
+        public async Task<Invitation> Delete(Invitation entity)
         {
-            db.Set<Group>().Remove(entity);
+            db.Set<Invitation>().Remove(entity);
             try
             {
                 await db.SaveChangesAsync();
@@ -115,17 +114,16 @@ namespace DV_Prog4_EE.Repositories
             return entity;
         }
 
-        public async Task<Group> Delete(int id)
+        public async Task<Invitation> Delete(int id)
         {
-            var entity = GetById(id);
+            var entity = await GetById(id);
             if (entity == null) return null;
             return await Delete(entity);
         }
 
         private async Task<bool> Exists(int id)
         {
-            return await db.Set<Group>().AnyAsync(e => e.Id == id);
+            return await db.Set<Invitation>().AnyAsync(e => e.Id == id);
         }
-
     }
 }

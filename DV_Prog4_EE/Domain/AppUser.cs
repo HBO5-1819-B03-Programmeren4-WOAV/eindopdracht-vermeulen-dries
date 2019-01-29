@@ -13,7 +13,6 @@ namespace DV_Prog4_EE.Domain
         public string Interests { get; set; }
         public string GroupName { get; set; }
         public List<Invitation> PendingInvites { get; set; }
-        
         public AppUser(string email)
         {
             Email = email;

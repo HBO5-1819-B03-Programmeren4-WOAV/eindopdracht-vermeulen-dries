@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DV_Prog4_EE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190127180915_mig7")]
-    partial class mig7
+    [Migration("20190129215759_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,8 @@ namespace DV_Prog4_EE.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<int?>("EventId");
+
                     b.Property<string>("FirstName");
 
                     b.Property<int?>("GroupId");
@@ -42,6 +44,8 @@ namespace DV_Prog4_EE.Migrations
                     b.Property<string>("LastName");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.HasIndex("GroupId");
 
@@ -55,8 +59,6 @@ namespace DV_Prog4_EE.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Activity");
-
-                    b.Property<int?>("AppUserId");
 
                     b.Property<DateTime?>("Created");
 
@@ -72,11 +74,26 @@ namespace DV_Prog4_EE.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("DV_Prog4_EE.Domain.Event_User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Created");
+
+                    b.Property<string>("Email");
+
+                    b.Property<int>("EventKey");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Event_User");
                 });
 
             modelBuilder.Entity("DV_Prog4_EE.Domain.Friend", b =>
@@ -106,8 +123,6 @@ namespace DV_Prog4_EE.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AdminIdId");
-
                     b.Property<DateTime?>("Created");
 
                     b.Property<string>("Interest");
@@ -115,8 +130,6 @@ namespace DV_Prog4_EE.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AdminIdId");
 
                     b.ToTable("Group");
                 });
@@ -133,7 +146,7 @@ namespace DV_Prog4_EE.Migrations
 
                     b.Property<int?>("EventId");
 
-                    b.Property<int?>("GroupId");
+                    b.Property<int>("GroupId");
 
                     b.Property<string>("ReceiverEmail");
 
@@ -319,6 +332,10 @@ namespace DV_Prog4_EE.Migrations
 
             modelBuilder.Entity("DV_Prog4_EE.Domain.AppUser", b =>
                 {
+                    b.HasOne("DV_Prog4_EE.Domain.Event")
+                        .WithMany("Invitees")
+                        .HasForeignKey("EventId");
+
                     b.HasOne("DV_Prog4_EE.Domain.Group")
                         .WithMany("Members")
                         .HasForeignKey("GroupId");
@@ -326,10 +343,6 @@ namespace DV_Prog4_EE.Migrations
 
             modelBuilder.Entity("DV_Prog4_EE.Domain.Event", b =>
                 {
-                    b.HasOne("DV_Prog4_EE.Domain.AppUser")
-                        .WithMany("Events")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("DV_Prog4_EE.Domain.Group", "Owner")
                         .WithMany("Events")
                         .HasForeignKey("OwnerId");
@@ -346,13 +359,6 @@ namespace DV_Prog4_EE.Migrations
                         .HasForeignKey("User2Id");
                 });
 
-            modelBuilder.Entity("DV_Prog4_EE.Domain.Group", b =>
-                {
-                    b.HasOne("DV_Prog4_EE.Domain.AppUser", "AdminId")
-                        .WithMany()
-                        .HasForeignKey("AdminIdId");
-                });
-
             modelBuilder.Entity("DV_Prog4_EE.Domain.Invitation", b =>
                 {
                     b.HasOne("DV_Prog4_EE.Domain.AppUser")
@@ -365,7 +371,8 @@ namespace DV_Prog4_EE.Migrations
 
                     b.HasOne("DV_Prog4_EE.Domain.Group", "Group")
                         .WithMany()
-                        .HasForeignKey("GroupId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

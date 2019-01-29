@@ -10,7 +10,8 @@ namespace DV_Prog4_EE.Repositories.Base
     public interface IGroupRepository
     {
         Group GetBy(string name);
-        Task<Group> GetById(int id);
+        Group GetById(int id);
+        
         IQueryable<Group> GetAll();
         Task<IEnumerable<Group>> ListAll();
         IQueryable<Group> GetFiltered(Expression<Func<Group, bool>> predicate);

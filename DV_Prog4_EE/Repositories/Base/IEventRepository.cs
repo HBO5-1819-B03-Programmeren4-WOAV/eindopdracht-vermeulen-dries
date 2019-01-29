@@ -22,6 +22,6 @@ namespace DV_Prog4_EE.Repositories.Base
         List<Event> GetAllEvents();
         Event GetBy(int id);
         List<Event> GetByGroupId(int id);
-        Task<Event_User> AddLinkToUser(Event_User entity)
+        Task<Event_User> AddLinkToUser(Event_User entity);
     }
 }

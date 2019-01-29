@@ -17,9 +17,12 @@
                 <td><p>@item.Email</p></td>
 
                 <td>
+                    @if (Model.User.GroupName != null)
+                    {
                     <form asp-action="Invite" method="post" asp-route-email=@item.Email>
                         <button class="btn btn-info" type="submit">Invite</button>
                     </form>
+                    }
                 </td>
             </tr>
         }
@@ -40,6 +43,7 @@
                 <td><p>@item.Description</p></td>
 
                 <td>
+                    
                     <form asp-action="Subscribe" method="post" asp-route-id=@item.Id>
                         <button class="btn btn-info" type="submit">Participate</button>
                     </form>
@@ -62,9 +66,9 @@
                 
 
                 <td>
-                    <form asp-action="Subscribe" method="post" asp-route-id=@item.Id>
+                    @*<form asp-action="Subscribe" method="post" asp-route-id=@item.Id>
                         <button class="btn btn-info" type="submit">Request to join</button>
-                    </form>
+                    </form>*@
                 </td>
             </tr>
         }

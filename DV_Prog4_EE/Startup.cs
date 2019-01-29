@@ -41,6 +41,7 @@ namespace DV_Prog4_EE
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IInvitationRepository, InvitationRepository>();
             services.AddScoped<UserFilter>();
 
             services.AddSignalR();

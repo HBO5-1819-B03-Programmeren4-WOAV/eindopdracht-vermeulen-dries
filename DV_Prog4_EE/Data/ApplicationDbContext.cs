@@ -18,8 +18,8 @@ namespace DV_Prog4_EE.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Group>().ToTable("Group");
-            modelBuilder.Entity<AppUser>().ToTable("User");
+            modelBuilder.Entity<Group>().ToTable("Groups");
+            modelBuilder.Entity<AppUser>().ToTable("Users");
             modelBuilder.Entity<Event>().ToTable("Event");
             modelBuilder.Entity<Invitation>().ToTable("Invitation");
             modelBuilder.Entity<Friend>().ToTable("Friends");

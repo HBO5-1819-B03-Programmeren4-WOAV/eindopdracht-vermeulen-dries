@@ -71,14 +71,17 @@ namespace Prog5_eindopdracht_DV.Controllers
                 e.From = vm.From;
                 e.To = vm.To;
                 e.Owner = _groupRepository.GetBy(user.GroupName);
+                e.Invitees = new List<AppUser>();
+                e.Invitees.Add(user);
                 _eventRepository.Add(e);
                 _eventRepository.AddLinkToUser(new Event_User(user.Email, e.Id));
+                
             }
             catch(Exception e)
             {
                 return RedirectToAction(nameof(Create), ActionType.Create);
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),"Group");
         }
     }
 }

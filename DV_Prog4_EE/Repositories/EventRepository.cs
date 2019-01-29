@@ -32,7 +32,8 @@ namespace DV_Prog4_EE.Repositories
 
         public Event GetBy(int id)
         {
-            return _events.FirstOrDefault(c => c.Id == id);
+            return _events.Include(c => c.Invitees).
+                FirstOrDefault(c => c.Id == id);
         }
 
         public List<Event> GetByGroupId(int id)

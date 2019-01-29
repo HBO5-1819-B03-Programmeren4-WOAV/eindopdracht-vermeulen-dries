@@ -18,5 +18,11 @@ namespace DV_Prog4_EE.Models
         public string Description { get; set; }
         public ActionType Type { get; set; }
 
+        public EventViewModel()
+        {
+            From = DateTime.Today;
+            To = DateTime.Today.AddDays(1);
+        }
+
     }
 }

@@ -11,6 +11,7 @@ namespace DV_Prog4_EE.Models
         public List<AppUser> Users { get; set; }
         public string Filter { get; set; }
         public List<Event> Events { get; set; }
-        public List<Group> Groups { get; set; }
+        public List<Group> Groups { get; set;}
+        public AppUser User { get; set; }
     }
 }

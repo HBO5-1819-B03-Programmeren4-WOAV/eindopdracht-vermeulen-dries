@@ -32,7 +32,7 @@
 
 <div class="col-sm-12 center-block text-center">
     <h1>@ViewData["Title"]</h1>
-    <form asp-action=@action method="post">
+    <form asp-action="Create" method="post">
 
         <input type="hidden" asp-for="Type" value=@Model.Type />
         <label asp-for="Name">Name of your event</label>

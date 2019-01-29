@@ -19,12 +19,14 @@ namespace Prog5_eindopdracht_DV.Controllers
         private IUserRepository _userRepository;
         private IGroupRepository _groupRepository;
         private IEventRepository _eventRepository;
+        private IInvitationRepository _invitationRepository;
 
-        public SearchController(IUserRepository userRepository,IEventRepository eventRepository,IGroupRepository groupRepository)
+        public SearchController(IUserRepository userRepository,IEventRepository eventRepository,IGroupRepository groupRepository, IInvitationRepository invitationRepository)
         {
             _userRepository = userRepository;
             _groupRepository = groupRepository;
             _eventRepository = eventRepository;
+            _invitationRepository = invitationRepository;
         }
         public IActionResult Index(AppUser user)
         {
@@ -33,6 +35,7 @@ namespace Prog5_eindopdracht_DV.Controllers
             ViewBag.Values = s;
             vm.Users = _userRepository.GetAll().ToList();
             vm.Filter = "People";
+            vm.User = user;
             return View(vm);
         }
 
@@ -57,8 +60,42 @@ namespace Prog5_eindopdracht_DV.Controllers
                     vm.Filter = "Groups";
                     break;
             }
-            
+            vm.User = user;
             return View(vm);
+        }
+        [HttpPost]
+        public IActionResult Invite(AppUser user, string email)
+        {
+            try
+            {
+                Invitation i = new Invitation();
+                i.Group = _groupRepository.GetBy(user.GroupName);
+                i.ReceiverEmail = email;
+                i.SenderName = user.Email;
+                _invitationRepository.Add(i);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = "Something went wrong while trying to invite " + email;
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["message"] = "Invited user " + email ;
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Subscribe(AppUser user, int id)
+        {
+            try
+            {
+                Event_User ev = new Event_User(user.Email, id);
+                _eventRepository.AddLinkToUser(ev).Wait();
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index), "Event");
         }
     }
 }

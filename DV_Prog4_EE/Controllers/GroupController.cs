@@ -18,11 +18,13 @@ namespace Prog5_eindopdracht_DV.Controllers
         private IUserRepository _userRepository;
         private IGroupRepository _groupRepository;
         private IEventRepository _eventRepository;
-        public GroupController(IUserRepository userRepository, IGroupRepository groupRepository, IEventRepository eventRepository)
+        private IInvitationRepository _invitationRepository;
+        public GroupController(IUserRepository userRepository, IGroupRepository groupRepository, IEventRepository eventRepository, IInvitationRepository invitationRepository)
         {
             _userRepository = userRepository;
             _groupRepository = groupRepository;
             _eventRepository = eventRepository;
+            _invitationRepository = invitationRepository;
         }
         public IActionResult Index(AppUser user)
         {
@@ -30,7 +32,6 @@ namespace Prog5_eindopdracht_DV.Controllers
             if(user.GroupName != null)
             {
                 Group group = _groupRepository.GetBy(user.GroupName);
-                vm.AdminName = group.AdminId.FirstName + " " + group.AdminId.LastName;
                 group.Events = _eventRepository.GetByGroupId(group.Id);
                 if (group.Events != null)
                 {
@@ -72,12 +73,11 @@ namespace Prog5_eindopdracht_DV.Controllers
                 {
                     Group group = new Group(vm.Name);
                     group.Interest = vm.Interest;
-                    group.AdminId = user;
                     group.Members = new List<AppUser>();
                     group.Members.Add(user);
-                    _groupRepository.Add(group);
+                    _groupRepository.Add(group).Wait();
                     user.GroupName = vm.Name;
-                    _userRepository.Update(user);
+                    _userRepository.Update(user).Wait();
                 }
             }
             catch(Exception e)

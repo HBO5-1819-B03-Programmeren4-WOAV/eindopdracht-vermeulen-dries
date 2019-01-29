@@ -17,10 +17,13 @@ namespace Prog5_eindopdracht_DV.Controllers
     public class ProfileController : Controller
     {
         private IUserRepository _userRepository;
-
-        public ProfileController(IUserRepository userRepository)
+        private IGroupRepository _groupRepository;
+        private IInvitationRepository _invitationRepository;
+        public ProfileController(IUserRepository userRepository, IGroupRepository groupRepository, IInvitationRepository invitationRepository)
         {
             _userRepository = userRepository;
+            _groupRepository = groupRepository;
+            _invitationRepository = invitationRepository;
         }
         public IActionResult Index(AppUser user)
         {
@@ -29,6 +32,20 @@ namespace Prog5_eindopdracht_DV.Controllers
             vm.LastName = user.LastName;
             vm.Interests = user.Interests;
             vm.mode = ViewType.Owner;
+            if(user.GroupName != null)
+            {
+                vm.HasGroup = true;
+            }
+            else
+            {
+                vm.HasGroup = false;
+            }
+            vm.Invites = _invitationRepository.GetByUserId(user.Email);
+            foreach(Invitation i in vm.Invites)
+            {
+                i.Group = _groupRepository.GetById(i.GroupId);
+            }
+
             return View(vm);
         }
 
@@ -56,8 +73,20 @@ namespace Prog5_eindopdracht_DV.Controllers
             {
                 user.Interests = vm.Interests;
             }
-            _userRepository.Update(user);
+            _userRepository.Update(user).Wait();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Join(AppUser user, int Id)
+        {
+            Group g = _groupRepository.GetById(Id);
+            user.GroupName = g.Name;
+            
+           _userRepository.Update(user).Wait();
+            g.Members.Add(user);
+            _groupRepository.Update(g).Wait();
+            return RedirectToAction(nameof(Index),"Group");
         }
     }
 }

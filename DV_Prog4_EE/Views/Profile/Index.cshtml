@@ -1,43 +1,48 @@
-﻿@model  DV_Prog4_EE.Models.ProfileViewModel
+﻿@model DV_Prog4_EE.Models.ProfileViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Your profile</h2>
 
-<div >
-<ul class="list-group">
-    <li>
-        Name: @Model.FirstName
-    </li>
-    <li>
-        Last name: @Model.LastName
-    </li>
-    <li>
-        Interests: @Model.Interests
-    </li>
-</ul>
+<div class="col-md-4">
+    <ul>
+        <li>
+            Name: @Model.FirstName
+        </li>
+        <li>
+            Last name: @Model.LastName
+        </li>
+        <li>
+            Interests: @Model.Interests
+        </li>
+    </ul>
 </div>
-@if (Model.mode == DV_Prog4_EE.Enums.ViewType.Owner)
+<br />
+@if (Model.HasGroup == false)
 {
-<a asp-controller="Profile" asp-action="Edit" class="btn btn-info btn-lg">Edit your profile</a>
-}
+    <div class="col-md-4">
+        <h2>Your invitations</h2>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" arialabelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" arialabel="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Authordetail</h4>
-            </div>
-            <div class="modal-body">
-                Details
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" datadismiss="modal">Close</button>
-            </div>
-        </div>
+
+
+        @if (Model.Invites != null)
+        {
+            @foreach (var item in Model.Invites)
+            {
+                <p>@item.Group.Name</p>
+                <form asp-action="Join" method="post" asp-route-id=@item.GroupId>
+                    <button class="btn btn-info" type="submit">Join</button>
+                </form>
+            }
+
+
+
+
+        }
     </div>
-</div>
+}
+    @if (Model.mode == DV_Prog4_EE.Enums.ViewType.Owner)
+    {
+        <a asp-controller="Profile" asp-action="Edit" class="btn btn-info btn-lg">Edit your profile</a>
+    }

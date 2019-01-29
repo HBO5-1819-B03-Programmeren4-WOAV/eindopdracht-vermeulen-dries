@@ -20,6 +20,7 @@ namespace DV_Prog4_EE.Models
         public List<string> MemberEmails { get; set; }
         public List<AppUser> Members { get; set; }
         public string UserName { get; set; }
+        public List<Invitation> Invitations { get; set; }
         public GroupIndexViewModel()
         {
             

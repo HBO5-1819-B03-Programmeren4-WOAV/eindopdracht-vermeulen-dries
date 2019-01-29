@@ -17,5 +17,7 @@ namespace DV_Prog4_EE.Models
         
         public string Interests { get; set; }
         public ViewType mode { get; set; }
+        public List<Invitation> Invites { get; set; }
+        public bool HasGroup { get; set; }
     }
 }
