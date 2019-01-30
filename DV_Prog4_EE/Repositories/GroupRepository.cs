@@ -25,7 +25,8 @@ namespace DV_Prog4_EE.Repositories
 
         public Group GetById(int id)
         {
-            return _group.FirstOrDefault(c => c.Id == id);
+            return _group.Include(u => u.Members)
+                .FirstOrDefault(c => c.Id == id);
         }
 
         public Group GetBy(string name)
