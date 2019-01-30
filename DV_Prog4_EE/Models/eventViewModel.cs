@@ -9,6 +9,7 @@ namespace DV_Prog4_EE.Models
 {
     public class EventViewModel
     {
+        public int Id { get; set; }
         public string Action { get; set; }
         public string Name { get; set; }
         [DataType(DataType.DateTime)]

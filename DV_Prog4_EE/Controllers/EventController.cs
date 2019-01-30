@@ -49,8 +49,30 @@ namespace Prog5_eindopdracht_DV.Controllers
                 vm.From = e.From;
                 vm.To = e.To;
                 vm.Name = e.Name;
+                vm.Id = e.Id;
             }
             return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EventViewModel vm, int id)
+        {
+            try
+            {
+                Event e = _eventRepository.GetBy(id);
+                vm.Action = e.Activity;
+                vm.Description = e.Description;
+                vm.From = e.From;
+                vm.To = e.To;
+                vm.Name = e.Name;
+                vm.Id = e.Id;
+                _eventRepository.Update(e).Wait();
+            }
+            catch(Exception e)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Create(AppUser user,ActionType mode)
@@ -73,8 +95,8 @@ namespace Prog5_eindopdracht_DV.Controllers
                 e.Owner = _groupRepository.GetBy(user.GroupName);
                 e.Invitees = new List<AppUser>();
                 e.Invitees.Add(user);
-                _eventRepository.Add(e);
-                _eventRepository.AddLinkToUser(new Event_User(user.Email, e.Id));
+                _eventRepository.Add(e).Wait();
+                _eventRepository.AddLinkToUser(new Event_User(user.Email, e.Id)).Wait();
                 
             }
             catch(Exception e)

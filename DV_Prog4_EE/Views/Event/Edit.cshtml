@@ -32,8 +32,64 @@
 
 <div class="col-sm-12 center-block text-center">
     <h1>@ViewData["Title"]</h1>
-    <form asp-action="Create" method="post">
+    @if (Model.Type == ActionType.Create)
+    {
+        <form asp-action="Create" method="post">
 
+            <input type="hidden" asp-for="Type" value=@Model.Type />
+            <label asp-for="Name">Name of your event</label>
+            <input asp-for="Name" class="form-control center-block" />
+            <label asp-for="Action">What will you be doing?</label>
+            <input asp-for="Action" class="form-control center-block" />
+            <label asp-for="From">Starting time</label>
+            <input asp-for="From" class="form-control center-block" />
+            <label asp-for="To">End time</label>
+            <input asp-for="To" class="form-control center-block" />
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" class="form-control center-block" />
+            <div>
+                @if (Model.Type != ActionType.NonEdit)
+                {
+                    <button class="btn btn-lg btn-info" type="submit">@submitTekst</button>
+                    <a asp-controller="Group" asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
+                }
+                else
+                {
+                    <a asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
+                }
+            </div>
+        </form>
+    }
+    else if (Model.Type == ActionType.Edit)
+    {
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" value=@Model.Id />
+            <input type="hidden" asp-for="Type" value=@Model.Type />
+            <label asp-for="Name">Name of your event</label>
+            <input asp-for="Name" class="form-control center-block" />
+            <label asp-for="Action">What will you be doing?</label>
+            <input asp-for="Action" class="form-control center-block" />
+            <label asp-for="From">Starting time</label>
+            <input asp-for="From" class="form-control center-block" />
+            <label asp-for="To">End time</label>
+            <input asp-for="To" class="form-control center-block" />
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" class="form-control center-block" />
+            <div>
+                @if (Model.Type != ActionType.NonEdit)
+                {
+                    <button class="btn btn-lg btn-info" type="submit">@submitTekst</button>
+                    <a asp-controller="Group" asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
+                }
+                else
+                {
+                    <a asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
+                }
+            </div>
+        </form>
+    }
+    else
+    {
         <input type="hidden" asp-for="Type" value=@Model.Type />
         <label asp-for="Name">Name of your event</label>
         <input asp-for="Name" class="form-control center-block" />
@@ -45,16 +101,6 @@
         <input asp-for="To" class="form-control center-block" />
         <label asp-for="Description">Description</label>
         <input asp-for="Description" class="form-control center-block" />
-        <div>
-            @if (Model.Type != ActionType.NonEdit)
-            {
-            <button class="btn btn-lg btn-info" type="submit">@submitTekst</button>
-            <a asp-controller="Group" asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
-            }
-            else
-            {
-                <a asp-action="Index"  class="btn btn-lg btn-default">Cancel</a>
-            }
-        </div>
-    </form>
+        <a asp-action="Index" class="btn btn-lg btn-default">Cancel</a>
+    }
 </div>
