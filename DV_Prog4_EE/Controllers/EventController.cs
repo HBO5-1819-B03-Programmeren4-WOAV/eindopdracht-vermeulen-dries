@@ -60,12 +60,11 @@ namespace Prog5_eindopdracht_DV.Controllers
             try
             {
                 Event e = _eventRepository.GetBy(id);
-                vm.Action = e.Activity;
-                vm.Description = e.Description;
-                vm.From = e.From;
-                vm.To = e.To;
-                vm.Name = e.Name;
-                vm.Id = e.Id;
+                e.Activity = vm.Action;
+                e.Description = vm.Description;
+                e.From = vm.From;
+                e.To = vm.To;
+                e.Name = vm.Name;
                 _eventRepository.Update(e).Wait();
             }
             catch(Exception e)
